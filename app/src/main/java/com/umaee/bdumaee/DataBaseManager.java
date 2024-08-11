@@ -7,25 +7,29 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DataBaseManager {
     public static final String TABLE_NAME="contactos";
-    public static final String CN_ID="_id";
+    public static final String CN_ID="id";
     public static final String CN_NAME="nombre";
     public static final String CN_PHONE="telefono";
     public static final String CN_CATEGORIES="categoria";
-
-    public static final String TABLE2_NAME = "Categorias";
-    public static final String CN_ID2="_id";
-    public static final String CN_NAME2="nombre";
 
     public static final String CREATE_TABLE = "create table" + TABLE_NAME +  "("
             + CN_ID + " integer primary key autoincrement, "
             + CN_NAME + " text not null, "
             + CN_PHONE + " text not null, "
-            + CN_CATEGORIES + " text not null);"
-            +"FOREIGN KEY (" + CN_CATEGORIES + ") REFERENCES " + TABLE2_NAME + "(" + CN_ID2 + ");";
+            + CN_CATEGORIES + " text not null);";
 
-    public static final String CREATE_CATEROGIAS = "create table" + TABLE2_NAME +  "("
-            + CN_ID2 + " integer primary key autoincrement, "
+    public static final String TABLE2_NAME = "Categorias";
+    public static final String CN_ID2="id2";
+    public static final String CN_NAME2="nombre";
+
+    public static final String CREATE_TABLE2 = "create table" + TABLE2_NAME +  "("
+            + CN_ID2 + " text primary key not null, "
             + CN_NAME2 + " text not null);";
+
+
+    public static final String ADD_FOREIGN_KEY = "ALTER TABLE " + TABLE_NAME
+            + " ADD CONSTRAINT fk_categorias FOREIGN KEY (" + CN_CATEGORIES + ") "
+            + "REFERENCES " + TABLE2_NAME + "(" + CN_ID2 + ");";
 
     private DBHelper helper;
     private SQLiteDatabase db;
@@ -51,9 +55,9 @@ public class DataBaseManager {
         db.delete(TABLE_NAME, CN_ID + " = ?", new String[]{id});
     }
 
-    public void eliminarMultiple(String nom1, String nom2){
+    /*public void eliminarMultiple(String nom1, String nom2){
         db.delete(TABLE_NAME, CN_NAME + "IN (?, ?)", new String[]{nom1, nom2});
-    }
+    }*/
 
     public void modificar(String id, String nombre, String telefono, String categoria){
         db.update(TABLE_NAME, generarContentValues(nombre, telefono, categoria), CN_ID + " = ?", new String[]{id});
@@ -89,8 +93,8 @@ public class DataBaseManager {
         db.insert(TABLE2_NAME, null, values);
     }
 
-    public void close(){
+   /* public void close(){
         helper.close();
-    }
+    }*/
 
 }

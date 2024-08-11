@@ -34,17 +34,17 @@ public class EditarActivity extends AppCompatActivity implements View.OnClickLis
         Intent param = getIntent(); parametro=param.getStringExtra("idContacto");
 
         cursor = manager.buscarID(parametro); cursor.moveToPosition(0);
-        txttelefono= (EditText) findViewById(R.id.txtNTelefono);
-        txtnombre = (EditText) findViewById(R.id.txtNContacto);
-        spncategorias = (Spinner) findViewById(R.id.cmbcategorias);
-        btnactualizar = (Button) findViewById(R.id.btnactualizar);
+        txttelefono= findViewById(R.id.txtNTelefono);
+        txtnombre = findViewById(R.id.txtNContacto);
+        spncategorias = findViewById(R.id.cmbcategorias);
+        btnactualizar = findViewById(R.id.btnactualizar);
         btnactualizar.setOnClickListener(this);
         txtnombre.setText(cursor.getString(1));
         txttelefono.setText(cursor.getString(2));
         posicion = Integer.parseInt(cursor.getString(3));
         final String[] from=new String[]{manager.CN_NAME2};
         int[] to = new int[]{android.R.id.text1};
-        ImageView avatar = (ImageView) findViewById(R.id.img);
+        ImageView avatar = findViewById(R.id.img);
 
         switch (posicion){ case 1:
             avatar.setImageResource(R.drawable.amigos);
@@ -60,7 +60,7 @@ public class EditarActivity extends AppCompatActivity implements View.OnClickLis
         spncategorias.setAdapter(acategorias);
 
         spncategorias.setSelection(posicion-1);
-        btneliminar=(Button) findViewById(R.id.btnEliminar);
+        btneliminar= findViewById(R.id.btnEliminar);
         btneliminar.setOnClickListener(this);
     }
 

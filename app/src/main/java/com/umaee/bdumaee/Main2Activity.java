@@ -33,10 +33,10 @@ public class Main2Activity extends AppCompatActivity implements ViewModelStoreOw
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2_main); manager = new DataBaseManager(this);
-        txttelefono= (EditText) findViewById(R.id.txtNTelefono);
-        txtnombre = (EditText) findViewById(R.id.txtNContacto);
-        spncategorias = (Spinner) findViewById(R.id.cmbcategorias);
-        btnguardar = (Button) findViewById(R.id.btnguardar);
+        txttelefono= findViewById(R.id.txtNTelefono);
+        txtnombre = findViewById(R.id.txtNContacto);
+        spncategorias = findViewById(R.id.cmbcategorias);
+        btnguardar = findViewById(R.id.btnguardar);
         btnguardar.setOnClickListener(this);
         final String[] from=new String[]{manager.CN_NAME2};
         int[] to = new int[]{android.R.id.text1};
@@ -44,7 +44,7 @@ public class Main2Activity extends AppCompatActivity implements ViewModelStoreOw
         ccategorias = manager.cargarCursorCategorias();
         acategorias = new SimpleCursorAdapter(this,android.R.layout.simple_spinner_dropdown_item,ccategorias,from,to,0);
         spncategorias.setAdapter(acategorias);
-        ImageView avatar = (ImageView) findViewById(R.id.img);
+        ImageView avatar = findViewById(R.id.img);
         avatar.setImageResource(R.drawable.contacto);
     }
 

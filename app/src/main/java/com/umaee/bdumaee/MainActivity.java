@@ -39,16 +39,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lista = (ListView) findViewById(R.id.listview);
-        tv = (TextView) findViewById(R.id.TxtNombre);
+        lista = findViewById(R.id.listview);
+        tv = findViewById(R.id.TxtNombre);
 
         manager = new DataBaseManager(this);
         cursor = manager.cargarCursorContactos();
 
-        btn = (Button) findViewById(R.id.button);
+        btn = findViewById(R.id.button);
         btn.setOnClickListener(this);
 
-        btnbuscar = (Button) findViewById(R.id.btnagregar);
+        btnbuscar = findViewById(R.id.btnagregar);
         btnbuscar.setOnClickListener(this);
 
         final String[] from = new String[]{DataBaseManager.CN_NAME, DataBaseManager.CN_PHONE};
@@ -57,14 +57,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor, from, to,0);
         lista.setAdapter(adapter);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cursor.moveToPosition(position);
-                Intent editar = new Intent(MainActivity.this, EditarActivity.class);
-                editar.putExtra("idContacto", cursor.getString(0)); startActivity(editar);
-                finish();
-            }
+        lista.setOnItemClickListener((parent, view, position, id) -> {
+            cursor.moveToPosition(position);
+            Intent editar = new Intent(MainActivity.this, EditarActivity.class);
+            editar.putExtra("idContacto", cursor.getString(0)); startActivity(editar);
+            finish();
         });
         registro = getSharedPreferences("Historial", 0);
         admin = registro.edit();
